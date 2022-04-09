@@ -11,17 +11,21 @@ const getAllActors = ( (req , res)=>{
 })
 
 const getActor = ( (req , res) =>{
-    const data = req.params.id;
-    if(typeof data != "string" ){
-        res.status(400).send();
-    }
-    conn.execute(
-        'SELECT * FROM actors where id = ?' , [req.params.id],
-        (_err, results) => {
-            console.log(results);
-            res.status(200).json({data : results})
-        }
-    )    
+        conn.execute(
+            'SELECT * FROM actors where id = ?' , [req.params.id],
+            (_err, results) => {
+                res.status(200).json({data : results})
+            }
+        ) 
 })
 
-module.exports  = {getAllActors , getActor}
+ const getActorWorks = ( (req , res) =>{
+    conn.execute(
+        'select * from general_shows where id = ANY(select show_id from show_actor_mapping  where member_id =?)' , [req.params.id],
+        (_err, results) => {
+            res.status(200).json({data : results})
+        }
+    )
+ })
+
+module.exports  = {getAllActors , getActor , getActorWorks}
