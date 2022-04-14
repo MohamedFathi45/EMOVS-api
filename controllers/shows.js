@@ -45,4 +45,31 @@ const readCat = (req , res)=>{
     )
 }
 
-module.exports = {getAllShows , getShow , readMainScreenShows,readLatest , readCat}
+const getMainRoleActors = (req , res)=>{
+    conn.execute(
+        'select * from member where id = ANY(select member_id from show_member_mapping where show_id = ?)' , [req.params.id]
+        ,(err , result) =>{
+            res.json({data : result})
+        }
+    )
+}
+
+const getSessions = (req, res)=>{
+    conn.execute(
+        'select * from session where show_id = ?' ,[req.params.id]
+        ,(err , result) =>{
+            res.json({data : result})
+        }
+    )
+}
+
+const getEpisods = (req, res) =>{
+    conn.execute(
+        'select * from episode where show_id = ? and session_id = ?' ,[req.params.show_id , req.params.session_id]
+        ,(err , result) =>{
+            res.json({data : result})
+        }
+    )
+}
+
+module.exports = {getEpisods , getSessions,getMainRoleActors,getAllShows , getShow , readMainScreenShows,readLatest , readCat}
