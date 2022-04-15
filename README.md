@@ -1,8 +1,9 @@
 # EMOVS-api
-javascript-npm-express REST Apis used as the apis for android streaming application(Back-End)
+javascript-npm-express REST Apis used as the apis for EMOVS streaming application(Back-End)
 
 # How to Run the app
 
+* run (npm install) for installing modules that you will need 
 * .env file
 * my-sql database
 * make sure that you donot have port 5000 in use or just change it from app.js file in the root of the porject
